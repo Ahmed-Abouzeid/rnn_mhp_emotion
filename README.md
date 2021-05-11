@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Running the Experiments
 
-To regenerate results from the paper or to rerun the whole experiments, follow the below commands and select according to your machine power:
+To regenerate results from the paper or to rerun the whole experiments, first, unzip the data folder in the same parent directory, then follow the below commands and select according to your machine power either CPU or GPU:
 
 ### to test
 ```
