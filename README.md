@@ -47,14 +47,14 @@ Our model achieves the following performance on the two datasets with each emoti
 
 Representation| Acc (1) | Acc (2) | Acc avg | Mutual-Excitation|
 | ------------------ |---------------- | -------------- | ------------------ |---------------- |
-|TopicalChat-A|0.83|0.72|0.64|0.06|
-|MovieDialogues-A|0.80|0.66|0.56|0.35|
-|TopicalChat-B|0.88|0.80|0.73|0.01|
-|MovieDialogues-B|0.82|0.67|0.58|0.46|
-|TopicalChat-C|0.85|0.56|0.51|0.01|
-|MovieDialogues-C|0.81|0.51|0.45|0.12|
-|TopicalChat-D|0.94|0.59|0.50|0.33|
-|MovieDialogues-D|0.91|0.59|0.52|0.21|
+|TopicalChat-A|0.82|0.51|0.67|0.16|
+|MovieDialogues-A|0.80|0.35|0.57|0.40|
+|TopicalChat-B|0.89|0.62|0.76|0.05|
+|MovieDialogues-B|0.82|0.20|0.51|0.45|
+|TopicalChat-C|0.85|0.54|0.64|0.06|
+|MovieDialogues-C|0.81|0.37|0.59|0.24|
+|TopicalChat-D|0.94|0.57|0.76|0.06|
+|MovieDialogues-D|0.92|0.76|0.84|0.16|
 
 
 ## Contributing
