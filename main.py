@@ -3,11 +3,11 @@ import torch.utils.data
 import torch.nn as nn
 from model import RNN
 from argparse import ArgumentParser
-from utils import load_data, final_data, run_stats
+from utils import load_data, final_data, run_stats, draw_features
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-data_path', type=str, default='data/final/iemocap')
+    parser.add_argument('-data_path', type=str, default='data/final/topical_chat')
     parser.add_argument('-e_input_dim', type=int, default=2)
     parser.add_argument('-t_input_dim', type=int, default=1)
     parser.add_argument('-hidden_dim', type=int, default=256)
@@ -26,19 +26,23 @@ if __name__ == '__main__':
     parser.add_argument('-epochs', type=int, default=35)
     parser.add_argument('-n_layers', type=int, default=1)
     parser.add_argument('-batch_size', type=int, default=1)
-    parser.add_argument('-prediction_length', type=int, default=5)
+    parser.add_argument('-prediction_length', type=int, default=3)
     parser.add_argument('-synthetic_shift_v', type=float, default=1)
     parser.add_argument('-mode', type=str, default='test')
-    parser.add_argument('-mut_excit', type=bool, default=True)
-    parser.add_argument('-increment', type=bool, default=True)
-    parser.add_argument('-model_name', type=str, default='D')
+    parser.add_argument('-mut_excit', type=bool, default=False)
+    parser.add_argument('-increment', type=bool, default=False)
+    parser.add_argument('-model_name', type=str, default='A')
 
     config = parser.parse_args()
 
     train_samples, test_samples = load_data(config.data_path)
+
     train_samples, train_conv = final_data(train_samples, config.seq_length, False, config.mut_excit, config.increment)
     test_samples_no_intervention, test_conv = final_data(test_samples, config.seq_length, False, config.mut_excit,  config.increment)
+
     test_samples_alt, _ = final_data(test_samples, config.seq_length, True, config.mut_excit,  config.increment)
+
+    #draw_features(test_conv)
 
     run_stats(train_samples, train_conv, test_samples_no_intervention, test_conv, config.mut_excit)
     rnn = RNN(config)
@@ -55,5 +59,3 @@ if __name__ == '__main__':
     else:
         RNN.evaluate_model(test_samples_no_intervention, config.data_path, config.prediction_length, config)
         RNN.evaluate_intervention(test_samples_no_intervention, test_samples_alt, config)
-
-
