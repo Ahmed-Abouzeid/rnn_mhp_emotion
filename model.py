@@ -227,9 +227,9 @@ class RNN(nn.Module):
                 else:
                     single_sequence_evnt_id.append(seq[1][0])
                     single_sequence_cont_var.append(seq[2][0])
-        
         if len(single_sequence_evnt_id) < config.seq_length - 1:
-            return None, None
+            return None, None, None, None
+
         whole_tensor_cont_var = torch.FloatTensor(single_sequence_cont_var)
         whole_tensor_evnt_id = input_2_tensor(single_sequence_evnt_id, encoding_space)
 
@@ -282,17 +282,28 @@ class RNN(nn.Module):
         for c in real_sequence_cont_var[:config.prediction_length]:
             classes_truths.append(c)
 
+        if len(classes_truths) < config.prediction_length:
+            return None, None, None, None
         classes_pred = []
         for c in prediction_seq_cont_var[:config.prediction_length]:
             classes_pred.append(c)
 
-        tp = 0
-        fp = 0
+        tp_1 = 0
+        fp_1 = 0
+        tp_2 = 0
+        fp_2 = 0
+
         for e, g_t in enumerate(classes_truths):
-            if classes_pred[e] == g_t:
-                tp += 1
-            else:
-                fp += 1
+            if e == 0:
+                if classes_pred[e] == g_t:
+                    tp_1 += 1
+                else:
+                    fp_1 += 1
+            elif e == 2:
+                if classes_pred[e] == g_t:
+                    tp_2 += 1
+                else:
+                    fp_2 += 1
 
         xs_1 = [i+1 for i in range(len(real_sequence_evnt_id))][:config.prediction_length]
         xs_2 = [i+1 for i in range(len(prediction_seq_evnt_id))][:config.prediction_length]
@@ -300,7 +311,7 @@ class RNN(nn.Module):
                           prediction_seq_cont_var[:config.prediction_length], real_sequence_evnt_id[:config.prediction_length],
                           prediction_seq_evnt_id[:config.prediction_length], conv_id)
 
-        return tp, fp
+        return tp_1, fp_1, tp_2, fp_2
 
     @staticmethod
     def evaluate_model(test_samples, test_files_path, prediction_length, config):
@@ -311,16 +322,25 @@ class RNN(nn.Module):
         start = int(lines[1].split(',')[0])
         end = int(lines[-1].split(',')[0])
         reader.close()
-        accs = []
+        accs_1 = []
+        accs_2 = []
+
         for _ in tqdm(range(10)):
-            exp_accs = []
+            exp_accs_1 = []
+            exp_accs_2 = []
+
             for conv_id in range(start, end, 1):
-                tps, fps = RNN.generate_predicted_sequence(test_samples, str(conv_id), config)
-                if tps is not None and fps is not None:
-                    exp_accs.append(tps / (tps + fps))
-            accs.append(sum(exp_accs) / len(exp_accs))
-        print('Avg Long Term Acc: ', round(sum(accs) / len(accs), 4), 'On Number of Future Turns:',
-              prediction_length)
+                tps_1, fps_1, tps_2, fps_2 = RNN.generate_predicted_sequence(test_samples, str(conv_id), config)
+                if tps_1 is not None and fps_1 is not None:
+                    exp_accs_1.append(tps_1 / (tps_1 + fps_1))
+                if tps_2 is not None and fps_2 is not None:
+                    exp_accs_2.append(tps_2 / (tps_2 + fps_2))
+
+            accs_1.append(sum(exp_accs_1) / len(exp_accs_1))
+            accs_2.append(sum(exp_accs_2) / len(exp_accs_2))
+
+        print('Avg Long Term Acc: ', round(sum(accs_1) / len(accs_1), 4), 'On Future Turn: 1')
+        print('Avg Long Term Acc: ', round(sum(accs_2) / len(accs_2), 4), 'On Future Turn: 2')
 
     @staticmethod
     def evaluate_intervention(test_samples_h0, test_samples_h1, config):
@@ -334,7 +354,7 @@ class RNN(nn.Module):
 
         sig_perc = []
         alt_was_better_perc = []
-        for i in range(10):
+        for i in range(6):
             all_ids = set()
             for sample in test_samples_h0:
                 all_ids.add(sample[0])
@@ -433,17 +453,19 @@ class RNN(nn.Module):
 
             P = []
             for e, emo_class in enumerate(prediction_seq_cont_var):
-                if e % 2 == 0:
+                if e % 2 == 0: # even indices mean that we are evaluating mutual excitation on human sequence, 
+                    # odd means we evaluate self excitation on chatbot. 
+                    # The permutation of emotions is done only in the feature vector for the chatbot sequence.
                     P.append(emo_class)
             if enum == 0:
-                a = P
+                a = P[:2]
             else:
-                b = P
+                b = P[:2]
 
         if len(a) >= 1:
             tStat, pValue = stats.ttest_ind(a, b, equal_var=False)
-            sns.kdeplot(a, shade=True, label='Consequence(i), M= ' + str(round(np.mean(a), 2)))
-            sns.kdeplot(b, shade=True, label='Consequence(j), M= ' + str(round(np.mean(b), 2)))
+            sns.kdeplot(a, shade=True, label='Consequence(i), M= ' + str(round(np.mean(a), 2)), linestyle="--", color='black')
+            sns.kdeplot(b, shade=True, label='Consequence(j), M= ' + str(round(np.mean(b), 2)), color='maroon')
             plt.xlabel('Avg Emotion Shift')
             plt.title('P-value='+str(round(pValue, 4)))
 
