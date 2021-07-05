@@ -1,4 +1,4 @@
-#  Neural Emotion Hawkes Process for Oracling Emotion Consequences in online Dialogues.
+#  Learning Tame Hidden Representations for Non-parametric Hawkes Processes.
 
 
 This repository provides an LSTM-based Hawkes process which can learn hidden representations within a short-length dyadic conversation emotion dynamics. Learning hidden influence patterns in conversations opens the venue for emotional intelligent chatbots where a controller agent can estimate the future consequences of its expressed emotions.. We evaluate our model on two public datasets: (1) Cornell Movie-Dialogues, and (2) Topical Chat. 
