@@ -57,7 +57,7 @@ python main.py --mode 'train' --gpu 'no'  --mut_excit [based on desired shift re
 
 Our model achieves the following performance on the two datasets with each emotion change representation, below are the obtained results as in the paper for the other partner (e.g., human prediction accuracy and mutual excitation captured due to the chatbot actions) :
 
-###  Empirical Results for Long-term Prediction Accuracy and Excitation Proprieties Captured on the Three Datasets andDifferent Utilized Representation Methods.
+###  Empirical Results for Short-term Prediction Accuracy and Excitation Proprieties Captured on the two Datasets and Different Utilized Representation Methods.
 
 
 Representation| Acc (1) | Acc (2) | Acc avg | Mutual-Excitation|
