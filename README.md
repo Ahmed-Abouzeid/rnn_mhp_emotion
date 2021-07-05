@@ -9,9 +9,10 @@ This repository presents source code and data used in the paper "Learning Tame H
 
 ## Model Parameters
 <img src="fig_param.PNG" width="300" height="350">
+
 ## Requirements
 
-To install requirements:
+### To install requirements:
 
 ```setup
 pip install -r requirements.txt
