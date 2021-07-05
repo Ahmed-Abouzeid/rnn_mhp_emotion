@@ -1,11 +1,11 @@
 #  Neural Emotion Hawkes Process for Oracling Emotion Consequences in online Dialogues.
 
 
-This repository provides the source code and datasets used in the paper: Neural Emotion Hawkes Process for Oracling Emotion Consequences in online Dialogues. We provide an Artificial Intelligence model which can provide excitation for the other partner during an one-on-one online text-based conversation. We propose a Neural Emotion Hawkes Process (NEHP) for predicting future emotions of the other conversation partner. Moreover, the model is be able to distinguish between variant future consequences of the provided excitation, and selects the optimum behaviour, accordingly. We evaluate our model on three public datasets: (1) Cornell Movie-Dialogues, (2) Topical Chat, and (3) Iemocap dataset. 
+This repository provides an LSTM-based Hawkes process which can learn hidden representations within a short-length dyadic conversation emotion dynamics. Learning hidden influence patterns in conversations opens the venue for emotional intelligent chatbots where a controller agent can estimate the future consequences of its expressed emotions.. We evaluate our model on two public datasets: (1) Cornell Movie-Dialogues, and (2) Topical Chat. 
 
 
 ## Model Architicture
-<img src="2fig.png" width="400" height="600">
+<img src="fig_arc.png" width="600" height="500">
 
 
 ## Requirements
