@@ -7,7 +7,8 @@ This repository presents source code and data used in the paper "Learning Tame H
 ## Model Architicture
 <img src="fig_arc.PNG" width="800" height="500">
 
-
+## Model Parameters
+<img src="fig_param.PNG" width="800" height="500">
 ## Requirements
 
 To install requirements:
