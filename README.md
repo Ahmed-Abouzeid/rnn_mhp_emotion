@@ -5,7 +5,7 @@ This repository provides an LSTM-based Hawkes process which can learn hidden rep
 
 
 ## Model Architicture
-<img src="fig_arc.PNG" width="600" height="500">
+<img src="fig_arc.PNG" width="800" height="500">
 
 
 ## Requirements
