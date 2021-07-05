@@ -10,8 +10,7 @@ import json
 from tqdm import tqdm
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import collections
-from scipy import stats
-from itertools import groupby
+from matplotlib.colors import LinearSegmentedColormap
 
 encoding_space__ = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 encoding_space_ = [0, 1, 2, 3, 4, 5, 6]
@@ -641,7 +640,7 @@ def to_feature_emo_shift(real_numbers_seq, intervention, mut_excit = False, incr
         indexer += 1
     
     if intervention:
-        random.shuffle(event_1_seq)
+        random.shuffle(event_2_seq) # if we evaulate for intevention and excitation so we permute chatbot sequence (event_seq_2)
 
     if not mut_excit:
         seq_1 = [event_1_seq[0]]
@@ -1044,6 +1043,62 @@ def run_stats(train_samples, train_convs, test_samples, test_convs, mut_excit):
     print('std test conv emotion shift: ', std_test_shifts)
     print('train samples class freq: ', train_class_freq)
     print('test samples class freq: ', test_class_freq)
+
+
+def draw_features(train_convs):
+    """draws the emotion shifts for each model, shows how a conversation as an example evolves in term of emotion shifts
+    where the latter is represented in a certain way"""
+
+    shifts = []
+    for conv in train_convs:
+        if conv[0][0] == '8000':
+            shifts = conv[2][:10]
+            break
+    turns = list(range(len(shifts)))
+    N = len(turns)
+    data = np.ones((N, N)) * np.nan
+    ref_shift_indices = [-1 for _ in range(len(shifts))]
+    for e, s in enumerate(shifts):
+        ref_shift_indices[e] = sorted(shifts).index(s)
+
+    for t in turns:
+        data[ref_shift_indices[t]][t] = shifts[t]
+
+    new_data = np.zeros((N, N))
+    for e, row in enumerate(reversed(data)):
+        new_data[e] = row
+
+    fig, ax = plt.subplots(1, 1, tight_layout=True)
+    # make color map
+    dic = {'red': ((0., 1, 0),
+                   (0.66, 1, 1),
+                   (0.89, 1, 1),
+                   (1, 0.5, 0.5)),
+           'green': ((0., 1, 0),
+                     (0.375, 1, 1),
+                     (0.64, 1, 1),
+                     (0.91, 0, 0),
+                     (1, 0, 0)),
+           'blue': ((0., 1, 1),
+                    (0.34, 1, 1),
+                    (0.65, 0, 0),
+                    (1, 0, 0))}
+
+    # set the'bad' values (nan) to be white and transparent
+    cmap = LinearSegmentedColormap('custom_cmap', dic)
+    cmap.set_bad('white')
+    # draw the grid
+    for x in range(N + 1):
+        ax.axhline(x, lw=0.1, color='k')
+        ax.axvline(x, lw=0.1, color='k')
+    # draw the boxes
+    img = ax.imshow(new_data, interpolation='none', cmap=cmap, extent=[0, N, 0, N])
+    fig.colorbar(img)
+    print(shifts)
+    print(ref_shift_indices)
+    ax.axis('off')
+    plt.show()
+    exit()
 
 
 
