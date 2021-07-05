@@ -45,7 +45,7 @@ Our model achieves the following performance on the two datasets with each emoti
 ###  Empirical Results for Long-term Prediction Accuracy and Excitation Proprieties Captured on the Three Datasets andDifferent Utilized Representation Methods.
 
 
-Representation|Acc #1 | Acc (1) | Acc (2) | Acc avg | Mutual-Excitation|
+Representation| Acc (1) | Acc (2) | Acc avg | Mutual-Excitation|
 | ------------------ |---------------- | -------------- | ------------------ |---------------- |---------------- |
 |TopicalChat-A|0.83|0.72|0.64|0.06|
 |MovieDialogues-A|0.80|0.66|0.56|0.35|
