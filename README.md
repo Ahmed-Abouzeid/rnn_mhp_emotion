@@ -1,14 +1,14 @@
-#  Learning Tame Hidden Representations for Non-parametric Hawkes Processes.
+#  Modelling Emotion Dynamics in Chatbots with Neural Hawkes Processes.
 
 
-This repository presents source code and data used in the paper "Learning Tame Hidden Representations for Non-parametric Hawkes Processes.". The paper provides an LSTM-based Hawkes process which can learn hidden representations within a short-length dyadic conversation emotion dynamics. Learning hidden influence patterns in conversations opens the venue for emotional intelligent chatbots where a controller agent can estimate the future consequences of its expressed emotions.. We evaluate our model on two public datasets: (1) Cornell Movie-Dialogues, and (2) Topical Chat. 
+This repository presents source code and data used in the paper "Modelling Emotion Dynamics in Chatbots with Neural Hawkes Processes". The paper provides an LSTM-based Hawkes process which can learn hidden representations within a short-length dyadic conversation emotion dynamics. Learning hidden influence patterns in conversations opens the venue for emotional intelligent chatbots where a controller agent can estimate the future consequences of its expressed emotions. We evaluate our model on two public datasets: (1) Cornell Movie-Dialogues, and (2) Topical Chat. 
 
 
 ## Model Architicture
 <img src="fig_arc.PNG" width="800" height="500">
 
 ## Model Parameters
-<img src="fig_param.PNG" width="300" height="350">
+<img src="fig_param.PNG" width="300" height="300">
 
 ## Requirements
 
@@ -57,19 +57,7 @@ python main.py --mode 'train' --gpu 'no'  --mut_excit [based on desired shift re
 
 Our model achieves the following performance on the two datasets with each emotion change representation, below are the obtained results as in the paper for the other partner (e.g., human prediction accuracy and mutual excitation captured due to the chatbot actions) :
 
-###  Empirical Results for Short-term Prediction Accuracy and Excitation Proprieties Captured on the two Datasets and Different Utilized Representation Methods.
-
-
-Representation| Acc (1) | Acc (2) | Acc avg | Mutual-Excitation|
-| ------------------ |---------------- | -------------- | ------------------ |---------------- |
-|TopicalChat-A|0.82|0.51|0.67|0.16|
-|MovieDialogues-A|0.80|0.35|0.57|0.40|
-|TopicalChat-B|0.89|0.62|0.76|0.05|
-|MovieDialogues-B|0.82|0.20|0.51|0.45|
-|TopicalChat-C|0.85|0.54|0.64|0.06|
-|MovieDialogues-C|0.81|0.37|0.59|0.24|
-|TopicalChat-D|0.94|0.57|0.76|0.06|
-|MovieDialogues-D|0.92|0.76|0.84|0.16|
+<img src="results.PNG" width="600" height="200">
 
 
 ## Contributing
