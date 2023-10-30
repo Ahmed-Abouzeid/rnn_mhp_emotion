@@ -1,4 +1,4 @@
-#  Modelling Emotion Dynamics in Chatbots with Neural Hawkes Processes.
+#  Modelling Emotion Dynamics in Chatbots with Neural Hawkes Processes - Part of my PhD work.
 
 
 This repository presents source code and data used in the paper "Modelling Emotion Dynamics in Chatbots with Neural Hawkes Processes". The paper provides an LSTM-based Hawkes process which can learn hidden representations within a short-length dyadic conversation emotion dynamics. Learning hidden influence patterns in conversations opens the venue for emotional intelligent chatbots where a controller agent can estimate the future consequences of its expressed emotions. We evaluate our model on two public datasets: (1) Cornell Movie-Dialogues, and (2) Topical Chat. 
